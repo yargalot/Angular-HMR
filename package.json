@@ -1,0 +1,14 @@
+{
+  "name": "angular-hmr",
+  "version": "1.0.0",
+  "description": "Angular Hot module replacement",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Steve",
+  "license": "ISC",
+  "dependencies": {
+    "source-map": "^0.4.2"
+  }
+}
