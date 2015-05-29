@@ -11,12 +11,11 @@ module.exports = function (source, map) {
     this.cacheable();
   }
 
-  // if (!source.match(ANGULAR_DIRECTIVE_RE)) {
-  //   return this.callback(null, source, map);
-  // }
+  if (!source.match(ANGULAR_DIRECTIVE_RE)) {
+    return this.callback(null, source, map);
+  }
 
-  console.log('[AMR] Replacement Matched derp');
-  //return;
+  console.log('[AMR] Replacement Matched');
 
   var resourcePath = this.resourcePath,
       filename = path.basename(resourcePath),
