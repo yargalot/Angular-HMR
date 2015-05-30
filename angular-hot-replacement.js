@@ -1,33 +1,15 @@
-var ANGULAR_MODULE;
-var MODULE_CACHE;
-var COMPILEPROVIDER;
 
-var _cache = {};
-var templateCache = {};
-var controllerCache = {};
+/* Angular Hor Module Replacement */
+var HotAngular = function() {
+  this.ANGULAR_MODULE;
+  this.MODULE_CACHE;
 
-var transform = function(n, obj) {
-
-    if (obj.template) {
-        obj.template = function() {
-            console.info('TEMPLATE CACHE REFRESH');
-            return templateCache[n];
-        };
-    }
-
-    // console.log('TypeOf function', typeof obj.controller === 'function')
-    if (obj.controller && typeof obj.controller === 'function') {
-        obj.controller = function($injector, $scope) {
-            return $injector.invoke(controllerCache[n], this, {
-                '$scope': $scope
-            });
-        };
-    }
-
-    return obj;
+  this.cache = {};
+  this.templateCache = {};
+  this.controllerCache = {};
 };
 
-function reloadState() {
+HotAngular.prototype.reloadState = function() {
   var elm = angular.element(document.querySelector('[ng-app]'));
   if (elm) {
       if (elm.injector().has('$state')) {
@@ -44,41 +26,57 @@ function reloadState() {
   }
 }
 
-
-
-var HotAngular = function() {
-
-};
-
 HotAngular.prototype.directive = function(name, d) {
     var obj = d();
-    var exists = MODULE_CACHE[name];
+    var exists = this.MODULE_CACHE[name];
+    var _that = this;
+
+    var transform = function(n, obj) {
+
+        if (obj.template) {
+            obj.template = function() {
+                console.info('TEMPLATE CACHE REFRESH');
+                return _that.templateCache[n];
+            };
+        }
+
+        // console.log('TypeOf function', typeof obj.controller === 'function')
+        if (obj.controller && typeof obj.controller === 'function') {
+            obj.controller = function($injector, $scope) {
+                return $injector.invoke(_that.controllerCache[n], this, {
+                    '$scope': $scope
+                });
+            };
+        }
+
+        return obj;
+    };
 
     console.log('DIRECTIVE', name, obj);
 
     var changes = false;
 
-    changes = changes || JSON.stringify(obj.template) != JSON.stringify(templateCache[name]);
+    changes = changes || JSON.stringify(obj.template) != JSON.stringify(this.templateCache[name]);
     if (obj.template) {
-        templateCache[name] = obj.template;
+        this.templateCache[name] = obj.template;
     }
 
-    changes = changes || obj.controller + '' != controllerCache[name] + '';
+    changes = changes || obj.controller + '' != this.controllerCache[name] + '';
     if (obj.controller) {
-        controllerCache[name] = obj.controller;
+        this.controllerCache[name] = obj.controller;
     }
 
     if (changes && exists) {
-      reloadState();
+      this.reloadState();
     }
 
     if (!exists) {
 
-        ANGULAR_MODULE.directive(name, function() {
+        this.ANGULAR_MODULE.directive(name, function() {
             return transform(name, obj);
         });
 
-        MODULE_CACHE[name] = true;
+        this.MODULE_CACHE[name] = true;
 
     }
 
@@ -88,28 +86,29 @@ HotAngular.prototype.directive = function(name, d) {
 
 HotAngular.prototype.controller = function(name, thing) {
 
-  var exists = MODULE_CACHE[name];
-  controllerCache[name] = thing;
+  var _that = this;
+  var exists = this.MODULE_CACHE[name];
+  this.controllerCache[name] = thing;
 
   console.log('CONTROLLER', name, thing);
 
   if (!exists) {
-    MODULE_CACHE[name] = true;
-    console.log('Exists', MODULE_CACHE[name]);
+    this.MODULE_CACHE[name] = true;
+    console.log('Exists', this.MODULE_CACHE[name]);
 
-    ANGULAR_MODULE.controller(name, function($injector, $scope) {
+    this.ANGULAR_MODULE.controller(name, function($injector, $scope) {
 
         console.log('CONTROLLER CACHE');
-        console.log(controllerCache[name], this);
+        console.log(_that.controllerCache[name], this);
 
-        return $injector.invoke(controllerCache[name], this, {
+        return $injector.invoke(_that.controllerCache[name], this, {
             '$scope': $scope
         });
     });
   }
 
   if (exists) {
-    reloadState();
+    this.reloadState();
   }
 
   return this;
@@ -120,7 +119,7 @@ HotAngular.prototype.factory = function(name, thing) {
 
   console.log('FACTORY', name, thing);
 
-  ANGULAR_MODULE.factory(name, thing);
+  this.ANGULAR_MODULE.factory(name, thing);
 
   return this;
 
@@ -130,25 +129,23 @@ HotAngular.prototype.config = function(thing) {
 
   console.log('CONFIG', thing);
 
-  ANGULAR_MODULE.config(thing);
+  this.ANGULAR_MODULE.config(thing);
 
   return this;
 };
 
 HotAngular.prototype.module = function(identifier) {
-  ANGULAR_MODULE = angular.module(identifier);
+  this.ANGULAR_MODULE = angular.module(identifier);
 
-  if (!_cache[identifier]) {
-      _cache[identifier] = {};
+  if (!this.cache[identifier]) {
+      this.cache[identifier] = {};
   } else {
-      _cache[identifier] = _cache[identifier];
+      this.cache[identifier] = this.cache[identifier];
   }
 
-  MODULE_CACHE = _cache[identifier];
+  this.MODULE_CACHE = this.cache[identifier];
 
   return this;
 };
 
-module.exports = (function() {
-  return new HotAngular;
-})();
+module.exports = new HotAngular();
