@@ -1,38 +1,10 @@
 var ANGULAR_MODULE;
 var MODULE_CACHE;
-
 var COMPILEPROVIDER;
 
 var _cache = {};
 var templateCache = {};
 var controllerCache = {};
-var PRIORITY = {};
-var directiveCache = {};
-
-
-var save = function(n, obj, exists) {
-
-    var changes = false;
-
-    changes = changes || JSON.stringify(obj.template) != JSON.stringify(templateCache[n]);
-    if (obj.template) {
-        templateCache[n] = obj.template;
-    }
-
-
-    changes = changes || obj.controller + '' != controllerCache[n] + '';
-    if (obj.controller) {
-        controllerCache[n] = obj.controller;
-    }
-
-
-    if (changes && exists) {
-      reloadState();
-    }
-
-    return changes;
-};
-
 
 var transform = function(n, obj) {
 
@@ -51,10 +23,6 @@ var transform = function(n, obj) {
             });
         };
     }
-
-    // obj = directiveCache[n];
-    // obj.priority = PRIORITY[n]++;
-    // obj.terminal = true;
 
     return obj;
 };
@@ -88,7 +56,21 @@ HotAngular.prototype.directive = function(name, d) {
 
     console.log('DIRECTIVE', name, obj);
 
-    var changes = save.bind(this)(name, obj, exists);
+    var changes = false;
+
+    changes = changes || JSON.stringify(obj.template) != JSON.stringify(templateCache[name]);
+    if (obj.template) {
+        templateCache[name] = obj.template;
+    }
+
+    changes = changes || obj.controller + '' != controllerCache[name] + '';
+    if (obj.controller) {
+        controllerCache[name] = obj.controller;
+    }
+
+    if (changes && exists) {
+      reloadState();
+    }
 
     if (!exists) {
 
@@ -99,8 +81,6 @@ HotAngular.prototype.directive = function(name, d) {
         MODULE_CACHE[name] = true;
 
     }
-
-    console.log('PASSTHROUGH');
 
     return this;
 };
