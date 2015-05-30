@@ -9,7 +9,7 @@ Throwing up a sample app up at: <TBA>
 ## How it works
 This will inject the new controller / template then reload the state in UI Router
 
-Say your stucture was all like
+Say your structure was all like
 
 ```
 angular
