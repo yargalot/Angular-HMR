@@ -4,26 +4,24 @@ var path = require('path'),
     makeIdentitySourceMap = require('./makeIdentitySourceMap');
 
 
-var ANGULAR_DIRECTIVE_RE = /angular\.module\(([\"\'\w\.\-]+)\)/g;
+var angularModule= /angular\.module\(([\"\'\w\.\-]+)\)/g;
 
 module.exports = function (source, map) {
   if (this.cacheable) {
     this.cacheable();
   }
 
-  if (!source.match(ANGULAR_DIRECTIVE_RE)) {
+  if (!source.match(angularModule)) {
     return this.callback(null, source, map);
   }
 
   console.log('[AMR] Replacement Matched');
-
-  var resourcePath = this.resourcePath,
-      filename = path.basename(resourcePath),
-      separator = '\n\n',
-      prependText,
-      processedSource,
-      node,
-      result;
+  
+  var separator = '\n\n';
+  var prependText;
+  var processedSource;
+  var node;
+  var result;
 
   prependText = [
     'module.hot.accept();',
@@ -34,7 +32,7 @@ module.exports = function (source, map) {
     //'module.hot.dispose(function(data) {console.log(\'[SBOS] Reloaded\')})'
   ].join(' ');
 
-  processedSource = source.replace(ANGULAR_DIRECTIVE_RE, 'hotAngular.module($1)');
+  processedSource = source.replace(angularModule, 'hotAngular.module($1)');
 
   if (this.sourceMap === false) {
     return this.callback(null, [
