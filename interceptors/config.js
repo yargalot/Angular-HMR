@@ -6,7 +6,7 @@ module.exports = function(thing) {
   var functionString = thing.toString();
 
   functionString.replace(/var configName = [\'\"]([\w]+).+?(?=;)/g, function(match, contents) {
-    name = contents;
+    name = contents || new Date.getSeconds();
   });
 
   var exists = this.configCache[name];
