@@ -2,18 +2,15 @@ module.exports = function(name, thing) {
 
   var _that = this;
   var exists = this.MODULE_CACHE[name];
-  this.factoryCache[name] = thing;
+  this.serviceCache[name] = thing;
 
-  console.log('FACTORY', name, thing);
+  console.log('SERVICE', name, thing);
 
   if (!exists) {
     this.MODULE_CACHE[name] = true;
-    this.ANGULAR_MODULE.factory(name, function($injector) {
-
-        console.log('Factory CACHE');
-        console.log(_that.factoryCache[name], this);
-
-        return $injector.invoke(_that.factoryCache[name], this, {});
+    this.ANGULAR_MODULE.service(name, function($injector) {
+      console.log('FIRE');
+      return $injector.invoke(_that.serviceCache[name]);
     });
   }
 

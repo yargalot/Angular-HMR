@@ -4,7 +4,7 @@ var path = require('path'),
     makeIdentitySourceMap = require('./makeIdentitySourceMap');
 
 
-var angularModule= /angular\.module\(([\"\'\w\.\-]+)\)/g;
+var angularModule= /angular[\.\n ]+module\(([\'\"\w\.\-\,\[\] ]+)\)/g;
 
 module.exports = function (source, map) {
   if (this.cacheable) {
@@ -15,8 +15,8 @@ module.exports = function (source, map) {
     return this.callback(null, source, map);
   }
 
-  console.log('[AMR] Replacement Matched');
-  
+  console.log('[AHMR] Replacement Matched');
+
   var separator = '\n\n';
   var prependText;
   var processedSource;

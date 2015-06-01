@@ -12,8 +12,8 @@ module.exports = function(name, thing) {
 
     this.ANGULAR_MODULE.controller(name, function($injector, $scope) {
 
-        console.log('CONTROLLER CACHE');
-        console.log(_that.controllerCache[name], this);
+        // console.log('CONTROLLER CACHE');
+        // console.log(_that.controllerCache[name], this);
 
         return $injector.invoke(_that.controllerCache[name], this, {
             '$scope': $scope

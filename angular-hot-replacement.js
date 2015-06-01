@@ -7,6 +7,7 @@ var HotAngular = function() {
   this.cache = {};
   this.configCache = {};
   this.factoryCache = {};
+  this.serviceCache = {};
   this.templateCache = {};
   this.controllerCache = {};
 };

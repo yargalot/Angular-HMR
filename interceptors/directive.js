@@ -7,7 +7,6 @@ module.exports = function(name, d) {
 
         if (obj.template) {
             obj.template = function() {
-                console.info('TEMPLATE CACHE REFRESH');
                 return _that.templateCache[n];
             };
         }
