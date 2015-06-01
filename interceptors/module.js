@@ -1,13 +1,13 @@
-module.exports = function(identifier) {
-  this.ANGULAR_MODULE = angular.module(identifier);
+module.exports = function(moduleName, injectorArray) {
+  this.ANGULAR_MODULE = angular.module(moduleName, injectorArray);
 
-  if (!this.cache[identifier]) {
-      this.cache[identifier] = {};
+  if (!this.cache[moduleName]) {
+      this.cache[moduleName] = {};
   } else {
-      this.cache[identifier] = this.cache[identifier];
+      this.cache[moduleName] = this.cache[moduleName];
   }
 
-  this.MODULE_CACHE = this.cache[identifier];
+  this.MODULE_CACHE = this.cache[moduleName];
 
   return this;
 };
