@@ -1,5 +1,7 @@
 # Angular HMR
 
+[![Join the chat at https://gitter.im/yargalot/Angular-HMR](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yargalot/Angular-HMR?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A (very alpha version) Webpack loader for Hot Module Replacement in Angular applications.
 
 This will only work in Ui Router at the moment with a specific app structure shown below. Will work on it a bit more over the week.
