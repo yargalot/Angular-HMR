@@ -8,13 +8,7 @@ module.exports = function(name, thing) {
 
   if (!exists) {
     this.MODULE_CACHE[name] = true;
-    console.log('Exists', this.MODULE_CACHE[name]);
-
     this.ANGULAR_MODULE.controller(name, function($injector, $scope) {
-
-        // console.log('CONTROLLER CACHE');
-        // console.log(_that.controllerCache[name], this);
-
         return $injector.invoke(_that.controllerCache[name], this, {
             '$scope': $scope
         });
