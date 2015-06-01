@@ -9,5 +9,7 @@ module.exports = function(moduleName, injectorArray) {
 
   this.MODULE_CACHE = this.cache[moduleName];
 
+  this.name = this.ANGULAR_MODULE.name;
+
   return this;
 };

@@ -10,6 +10,8 @@ var HotAngular = function() {
   this.serviceCache = {};
   this.templateCache = {};
   this.controllerCache = {};
+
+  this.name;
 };
 
 // Angular functions to replace

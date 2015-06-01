@@ -8,10 +8,7 @@ module.exports = function(name, thing) {
 
   if (!exists) {
     this.MODULE_CACHE[name] = true;
-    this.ANGULAR_MODULE.service(name, function($injector) {
-      console.log('FIRE');
-      return $injector.invoke(_that.serviceCache[name]);
-    });
+    this.ANGULAR_MODULE.service(name, this.serviceCache[name]);
   }
 
   if (exists) {
