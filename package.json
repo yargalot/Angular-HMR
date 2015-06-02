@@ -1,6 +1,6 @@
 {
   "name": "angular-hmr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Angular Hot module replacement",
   "main": "index.js",
   "scripts": {
