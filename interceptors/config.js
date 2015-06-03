@@ -1,39 +1,29 @@
-module.exports = function(thing) {
+module.exports = function(configFunction) {
 
   var _that = this;
   var name;
 
-  var functionString = thing.toString();
+  var functionString = configFunction.toString();
 
   functionString.replace(/var configName = [\'\"]([\w]+).+?(?=;)/g, function(match, contents) {
-    name = contents || new Date.getSeconds();
+    name = contents;
   });
 
   var exists = this.configCache[name];
 
-  console.log('CONFIG', thing);
+  console.log('CONFIG', configFunction);
 
-  this.configCache[name] = thing;
+  this.configCache[name] = configFunction;
 
   if (!exists) {
     this.ANGULAR_MODULE.config(function($injector) {
-
-        console.log('CONFIG Reloading');
-        //console.log(_that.configCache[name].toString());
-
         return $injector.invoke(_that.configCache[name], this);
     });
-
-    var configLength = this.ANGULAR_MODULE._configBlocks.length;
-
-    this.ANGULAR_MODULE._configBlocks[configLength -1].AngId = name;
   }
 
   if (exists) {
     this.reloadState();
   }
-
-  console.log(this.ANGULAR_MODULE._configBlocks);
 
   return this;
 };

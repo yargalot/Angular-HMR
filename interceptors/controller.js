@@ -1,10 +1,10 @@
-module.exports = function(name, thing) {
+module.exports = function(name, controllerFunction) {
 
   var _that = this;
   var exists = this.MODULE_CACHE[name];
-  this.controllerCache[name] = thing;
+  this.controllerCache[name] = controllerFunction;
 
-  console.log('CONTROLLER', name, thing);
+  console.log('CONTROLLER', name, controllerFunction);
 
   if (!exists) {
     this.MODULE_CACHE[name] = true;

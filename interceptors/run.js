@@ -1,8 +1,8 @@
-module.exports = function(thing) {
+module.exports = function(runFunction) {
 
-  console.log('RUN', thing);
+  console.log('RUN', runFunction);
 
-  this.ANGULAR_MODULE.run(thing);
+  this.ANGULAR_MODULE.run(runFunction);
 
   return this;
 };
