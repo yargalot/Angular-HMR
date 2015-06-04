@@ -19,7 +19,6 @@ var HotAngular = function() {
 };
 
 // Angular functions to replace
-
 HotAngular.prototype.run = require('./interceptors/run');
 HotAngular.prototype.value = require('./interceptors/value');
 HotAngular.prototype.module = require('./interceptors/module');
@@ -33,8 +32,10 @@ HotAngular.prototype.animation = require('./interceptors/animation');
 HotAngular.prototype.directive = require('./interceptors/directive');
 HotAngular.prototype.controller = require('./interceptors/controller');
 
+
 HotAngular.prototype.reloadState = function() {
   var elm = this.bootstrapElement;
+  
   if (elm) {
     if (elm.injector().has('$state')) {
       console.log('Reloading State');
@@ -51,7 +52,6 @@ HotAngular.prototype.reloadState = function() {
   }
 };
 
-
 HotAngular.prototype.recompile = function() {
   var elm = this.bootstrapElement;
 
@@ -61,5 +61,15 @@ HotAngular.prototype.recompile = function() {
 
   window.location.reload();
 };
+
+
+HotAngular.prototype.test = function(webpackModule) {
+
+  console.log(webpackModule);
+
+  this.webpackModule = webpackModule;
+
+  return this;
+}
 
 module.exports = new HotAngular();
