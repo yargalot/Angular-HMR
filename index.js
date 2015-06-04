@@ -4,7 +4,7 @@ var path = require('path'),
     makeIdentitySourceMap = require('./makeIdentitySourceMap');
 
 
-var angularModule= /angular[\.\n ]+module\(([\'\"\w\.\-\,\[\] ]+)\)/g;
+var angularModule= /angular[\.\n ]+module\(([\'\"\w\.\/\(\)\n\-\,\[\] ]+)\)/g;
 
 module.exports = function (source, map) {
   if (this.cacheable) {
@@ -32,7 +32,7 @@ module.exports = function (source, map) {
     //'module.hot.dispose(function(data) {console.log(\'[SBOS] Reloaded\')})'
   ].join(' ');
 
-  processedSource = source.replace(angularModule, 'hotAngular.module($1)');
+  processedSource = source.replace(angularModule, 'hotAngular.test(module).module($1)');
 
   if (this.sourceMap === false) {
     return this.callback(null, [
