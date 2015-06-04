@@ -12,8 +12,15 @@ module.exports = function(name, factoryFunction) {
   }
 
   if (exists) {
+    this.factoryInject = factoryFunction();
+
+    this.bootstrapElement.injector().invoke([name, function(factory) {
+      factory.loadSessions = this.factoryInject.loadSessions;
+    }], this);
+
     this.reloadState();
   }
+
 
   return this;
 

@@ -18,7 +18,13 @@ module.exports = function(name, serviceFunction) {
   }
 
   if (exists) {
-    this.recompile();
+    this.serviceInject = serviceFunction;
+
+    this.bootstrapElement.injector().invoke([name, function(service) {
+      service = this.serviceInject;
+    }], this);
+
+    this.reloadState();
   }
 
   return this;
