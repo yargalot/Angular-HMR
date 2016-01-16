@@ -8,11 +8,12 @@ module.exports = function(name, controllerFunction) {
 
   if (!exists) {
     this.MODULE_CACHE[name] = true;
-    this.ANGULAR_MODULE.controller(name, function($injector, $scope) {
+    ///to fix stricti-mode $injector:strictdi
+    this.ANGULAR_MODULE.controller(name,['$injector', '$scope', function($injector, $scope) {
         return $injector.invoke(_that.controllerCache[name], this, {
             '$scope': $scope
         });
-    });
+    }]);
   }
 
   if (exists) {

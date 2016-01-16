@@ -13,9 +13,11 @@ var HotAngular = function() {
 
   this.name;
   this.bootstrapElement;
-
-  this.element = document.querySelector('[ng-app]');
-  this.originalContent = this.element.innerHTML;
+  ///fix the position of the script, could be before ng-app, so wait to window.load
+	window.onload = function() {
+		this.element = document.querySelector('[ng-app]');
+		this.originalContent = this.element.innerHTML;
+	}
 };
 
 // Angular functions to replace
@@ -35,7 +37,7 @@ HotAngular.prototype.controller = require('./interceptors/controller');
 
 HotAngular.prototype.reloadState = function() {
   var elm = this.bootstrapElement;
-  
+
   if (elm) {
     if (elm.injector().has('$state')) {
       console.log('Reloading State');

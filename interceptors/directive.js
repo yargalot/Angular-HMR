@@ -1,5 +1,5 @@
 module.exports = function(name, d) {
-    var obj = d();
+    var obj = d[d.length-1](); ///fix, position of defined directive as default the function is at last in angular
     var exists = this.MODULE_CACHE[name];
     var _that = this;
 
