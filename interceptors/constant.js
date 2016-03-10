@@ -9,7 +9,7 @@ module.exports = function(name, constant) {
   this.constantCache[name] = constant;
 
   if (!exists) {
-    this.ANGULAR_MODULE.constant(name, this.valueCache[name]);
+    this.ANGULAR_MODULE.constant(name, this.constantCache[name]);
   }
 
   if (exists) {
