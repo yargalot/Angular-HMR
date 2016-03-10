@@ -6,7 +6,7 @@ module.exports = function(name, d) {
     } else if (typeof d === 'function') {
         obj = d();
     } else {
-        throw new Error('Unable to ');
+        throw new Error('Malformed directive function');
     }
 
     var exists = this.MODULE_CACHE[name];
