@@ -1,10 +1,18 @@
 module.exports = function(name, d) {
-    var obj = d();
+    var obj = null;
+    
+    if (Array.isArray(d)) {
+        obj = d[d.length - 1]();
+    } else if (typeof d === 'function') {
+        obj = d();
+    } else {
+        throw new Error('Malformed directive function');
+    }
+
     var exists = this.MODULE_CACHE[name];
     var _that = this;
 
     var transform = function(n, obj) {
-
         if (obj.template) {
             obj.template = function() {
                 return _that.templateCache[n];
