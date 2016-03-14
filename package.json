@@ -1,6 +1,6 @@
 {
   "name": "angular-hmr",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Angular Hot module replacement",
   "main": "index.js",
   "scripts": {
@@ -10,5 +10,18 @@
   "license": "ISC",
   "dependencies": {
     "source-map": "^0.4.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://yargalot@github.com/yargalot/Angular-HMR.git"
+  },
+  "keywords": [
+    "Angular",
+    "webpack",
+    "HMR"
+  ],
+  "bugs": {
+    "url": "https://github.com/yargalot/Angular-HMR/issues"
+  },
+  "homepage": "https://github.com/yargalot/Angular-HMR#readme"
 }
