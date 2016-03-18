@@ -35,7 +35,7 @@ HotAngular.prototype.controller = require('./interceptors/controller');
 
 HotAngular.prototype.reloadState = function() {
   var elm = this.bootstrapElement;
-  
+
   if (elm) {
     if (elm.injector().has('$state')) {
       console.log('Reloading State');
@@ -64,9 +64,6 @@ HotAngular.prototype.recompile = function() {
 
 
 HotAngular.prototype.test = function(webpackModule) {
-
-  console.log(webpackModule);
-
   this.webpackModule = webpackModule;
 
   return this;
